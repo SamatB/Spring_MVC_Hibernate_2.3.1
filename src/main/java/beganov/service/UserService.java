@@ -1,0 +1,20 @@
+package beganov.service;
+
+import beganov.entity.User;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+public interface UserService {
+
+    void addUser(User user);
+
+    List<User> getUsers();
+
+    User getUserById(long id);
+
+    void deleteUser(User user);
+
+    void updateUser(User user, long id);
+
+}
