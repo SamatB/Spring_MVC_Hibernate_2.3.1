@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    body{
+        background: url("https://wallpaperaccess.com/full/19621.jpg") no-repeat;
+        background-size: cover;
+    }
+    .login-box{
+        color: aliceblue;
+    }
+    label{
+        color: blue;
+    }
+    .back {
+        padding: 10px 30px;
+        margin: 0 auto;
+        border-radius: 12px;
+        display: block;
+        background-color: yellowgreen;
+    }
+
+    .back:hover {
+        background-color: yellow;
+    }
+
+    .upd{
+        padding: 10px 30px;
+        margin: 0 auto;
+        border-radius: 12px;
+        display: block;
+        background-color: green;
+    }
+    .upd:hover{
+        background-color: yellow;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+<div class="login-box" style="text-align:center; margin-top:40px; font-size: 30px;">
+    <h2>Update a user</h2>
+    <form action="#"
+          th:method="PATCH"
+          th:action="@{/users/{id}(id=${userUpdate.getId()})}"
+          th:object="${userUpdate}"
+          style="text-align:center; margin-top:30px; font-size: 30px;">
+
+        <div class="user-box">
+            <label >User name</label>
+            <input th:field="${userUpdate.name}">
+        </div>
+        <div class="user-box">
+            <label>User surname</label>
+            <input th:field="${userUpdate.surname}">
+        </div>
+        <div class="user-box">
+            <label>User age</label>
+            <input th:field="${userUpdate.age}">
+        </div>
+        <br>
+        <button class="upd" type="submit" value="Update">Update</button>
+    </form>
+    <div>
+        <br>
+        <input class="back" type="button" value="Go back"
+               onclick="window.location.href = '/users'">
+    </div>
+</div>
+</body>
+</html>
