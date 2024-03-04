@@ -1,5 +1,6 @@
 package beganov.config;
 
+import org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -12,15 +13,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:db.properties")
-@ComponentScan(value = "beganov")
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 public class JPAConfig {
 
     private final Environment environment;
@@ -33,10 +32,16 @@ public class JPAConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean lcemfb = new LocalContainerEntityManagerFactoryBean();
-        lcemfb.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         lcemfb.setDataSource(getDataSource());
-        lcemfb.setPackagesToScan("entity");
-        lcemfb.setJpaProperties(properties());
+        lcemfb.setPackagesToScan("beganov.entity");
+        lcemfb.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
+        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
+        lcemfb.setJpaProperties(properties);
         return lcemfb;
     }
 
@@ -55,15 +60,6 @@ public class JPAConfig {
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
         return jpaTransactionManager;
-    }
-
-    private Properties properties() {
-        Properties properties = new Properties();
-        properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
-        properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
-        properties.put("hibernate.format_sql", environment.getProperty("hibernate.format_sql"));
-        properties.put("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
-        return properties;
     }
 
 }
