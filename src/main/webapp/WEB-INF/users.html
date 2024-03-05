@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>All students</title>
@@ -120,13 +119,20 @@
 
         <td>
             <a class="update" th:href="@{/users/{id}/update(id=${user.getId()})}">
-                <button type="update" style="height: 40px; width: 80px; border-radius: 12px"> UPDATE</button>
+                <button type="submit" style="height: 40px; width: 80px; border-radius: 12px"> UPDATE</button>
             </a>
         </td>
         <td>
-            <form class="delete" th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+            <form class="delete" th:action="@{/delete}" th:href="@{/users/delete/{id}(id=${user.getId()})}">
                 <input type="submit" value="DELETE" style="height: 45px; width: 85px; background-color:red; border-radius: 12px"/>
+                <input type="hidden" th:field="*{user.getId()}" th:object="user">
             </form>
+
+<!--            <a th:action="@{/delete}">-->
+<!--                <input type="hidden" th:field="*{id}">-->
+<!--                <input th:href="@{/users/delete/(id=${user.getId()})}" type="submit" style="color: red">-->
+<!--            </a>-->
+
         </td>
     </tr>
     </tbody>

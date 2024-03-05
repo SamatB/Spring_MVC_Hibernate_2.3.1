@@ -49,16 +49,16 @@ public class UserController {
         return "redirect:/users";
     }
 
-    @PostMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id) {
-        User user = userService.getUserById(id);
-        userService.deleteUser(user);
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam("id") long id) {
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 
-    @GetMapping("/{id}")
-    public String getUserById(@PathVariable("id") long id, Model model) {
+    @GetMapping("/getUser")
+    public String getUserById(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
         return "users";
+        //Зачем этот метод?
     }
 }
