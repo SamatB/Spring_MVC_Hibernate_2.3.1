@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-    body{
-        background: url("https://wallpaperaccess.com/full/19621.jpg") no-repeat;
+    body {
+        background: url("https://www.pixel4k.com/wp-content/uploads/2020/01/lake-near-house-winter_1578254754.jpg.webp");
         background-size: cover;
     }
-    .login-box{
-        color: aliceblue;
+
+    .login-box {
+        color: wheat;
     }
-    label{
-        color: blue;
+
+    label {
+        color: white;
     }
+
     .back {
         padding: 10px 30px;
         margin: 0 auto;
@@ -23,14 +26,15 @@
         background-color: yellow;
     }
 
-    .upd{
+    .upd {
         padding: 10px 30px;
         margin: 0 auto;
         border-radius: 12px;
         display: block;
         background-color: green;
     }
-    .upd:hover{
+
+    .upd:hover {
         background-color: yellow;
     }
 </style>
@@ -43,12 +47,12 @@
     <h2>Update a user</h2>
     <form action="#"
           th:method="PATCH"
-          th:action="@{/users/{id}(id=${userUpdate.getId()})}"
+          th:action="@{/users/update(id=${userUpdate.getId()})}"
           th:object="${userUpdate}"
           style="text-align:center; margin-top:30px; font-size: 30px;">
 
         <div class="user-box">
-            <label >User name</label>
+            <label>User name</label>
             <input th:field="${userUpdate.name}">
         </div>
         <div class="user-box">
@@ -64,7 +68,7 @@
         <div>
             <br>
             <input class="back" type="button" value="Go back"
-                   onclick="window.location.href = 'users'">
+                   onclick="window.location.href = '/users'">
         </div>
     </form>
 </div>
